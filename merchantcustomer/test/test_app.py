@@ -1,13 +1,12 @@
+from tornado.testing import AsyncHTTPTestCase, gen_test
+from tornado.httputil import HTTPHeaders
 import urllib.parse
 import unittest
-from tornado.testing import AsyncHTTPTestCase, gen_test
-
 import momoko
+import json
 
 import app
 
-import json
-from tornado.httputil import HTTPHeaders
 
 dsn = 'dbname=%s user=%s password=%s host=%s' % ('docker', 'docker', 'docker', 'db')
 
@@ -25,7 +24,7 @@ class BaseTest(AsyncHTTPTestCase):
 
     @gen_test
     def tear_down_10(self):
-        # FIXME: need to use anothe DB for testing or better solution
+        # FIXME:
         yield self.conn.execute("TRUNCATE customer CASCADE;")
         yield self.conn.execute("TRUNCATE merchant CASCADE;")
 

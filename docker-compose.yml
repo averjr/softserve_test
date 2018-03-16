@@ -8,12 +8,12 @@ services:
       POSTGRES_USER: docker
       POSTGRES_DB: docker
     volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./deployment/init.sql:/docker-entrypoint-initdb.d/init.sql
   web:
     build: .
-    command: sh -c './wait-for db:5432 -- python3 app.py'
+    command: sh -c '/usr/local/bin/wait-for.sh db:5432 -- python3 ./app.py'
     volumes:
-      - .:/usr/src/app
+      - ./merchantcustomer:/usr/src/app/
     ports:
       - "8888:8888"
     depends_on:
