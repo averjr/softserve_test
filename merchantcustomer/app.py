@@ -5,6 +5,7 @@ import tornado.ioloop
 import tornado.web
 
 import momoko
+import os
 
 from controller.base import BaseHandler
 from controller.customers import CustomersHandler
@@ -12,8 +13,13 @@ from controller.customers import AccountsHandler
 from controller.merchants import MerchantsHandler
 
 
+dsn_bdname = os.getenv('POSTGRES_DB')
+dsn_user = os.getenv('POSTGRES_USER')
+dsn_password = os.getenv('POSTGRES_PASSWORD')
+dsn_host = os.getenv('DB_HOST')
+
 dsn = 'dbname={} user={} password={} host={}'
-dsn = dsn.format('docker', 'docker', 'docker', 'db')
+dsn = dsn.format(dsn_bdname, dsn_bdname, dsn_password, dsn_host)
 define("postgres_dsn", default=dsn)
 
 

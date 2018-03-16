@@ -4,12 +4,17 @@ import urllib.parse
 import unittest
 import momoko
 import json
+import os
 
 import app
 
+dsn_bdname = os.getenv('POSTGRES_DB')
+dsn_user = os.getenv('POSTGRES_USER')
+dsn_password = os.getenv('POSTGRES_PASSWORD')
+dsn_host = os.getenv('DB_HOST')
 
-dsn = 'dbname=%s user=%s password=%s host=%s' % ('docker', 'docker', 'docker', 'db')
-
+dsn = 'dbname={} user={} password={} host={}'
+dsn = dsn.format(dsn_bdname, dsn_bdname, dsn_password, dsn_host)
 
 class BaseTest(AsyncHTTPTestCase):
     dsn = dsn

@@ -1,16 +1,16 @@
-version: '2'
+version: '3'
 
 services:
   db:
     image: postgres:9.4
-    environment:
-      POSTGRES_PASSWORD: docker
-      POSTGRES_USER: docker
-      POSTGRES_DB: docker
+    env_file:
+      - ./deployment/variables.env
     volumes:
       - ./deployment/init.sql:/docker-entrypoint-initdb.d/init.sql
   web:
     build: .
+    env_file:
+      - ./deployment/variables.env
     command: sh -c '/usr/local/bin/wait-for.sh db:5432 -- python3 ./app.py'
     volumes:
       - ./merchantcustomer:/usr/src/app/
